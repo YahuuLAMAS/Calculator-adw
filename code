@@ -1,0 +1,203 @@
+import math
+import tkinter as tk
+from tkinter import messagebox
+
+class AdvancedCalculator:
+    def __init__(self):
+        self.history = []
+
+    def add(self, a, b):
+        result = a + b
+        self.history.append(f"Addition: {a} + {b} = {result}")
+        return result
+
+    def subtract(self, a, b):
+        result = a - b
+        self.history.append(f"Subtraction: {a} - {b} = {result}")
+        return result
+    
+    def multiply(self, a, b):
+        result = a * b
+        self.history.append(f"Multiplication: {a} * {b} = {result}")
+        return result
+
+    def divide(self, a, b):
+        if b == 0:
+            raise ValueError("Cannot divide by zero.")
+        result = a / b
+        self.history.append(f"Division: {a} / {b} = {result}")
+        return result
+
+    def power(self, base, exponent):
+        result = base ** exponent
+        self.history.append(f"Power: {base} ^ {exponent} = {result}")
+        return result
+
+    def square_root(self, value):
+        if value < 0:
+            raise ValueError("Cannot take the square root of a negative number.")
+        result = value ** 0.5
+        self.history.append(f"Square Root: √{value} = {result}")
+        return result
+
+    def logarithm(self, value, base=10):
+        if value <= 0:
+            raise ValueError("Logarithm undefined for non-positive values.")
+        result = math.log(value, base)
+        self.history.append(f"Logarithm: log_{base}({value}) = {result}")
+        return result
+    
+    def sine(self, degrees):
+        radians = math.radians(degrees)
+        result = math.sin(radians)
+        self.history.append(f"Sine: sin({degrees}°) = {result}")
+        return result
+
+    def cosine(self, degrees):
+        radians = math.radians(degrees)
+        result = math.cos(radians)
+        self.history.append(f"Cosine: cos({degrees}°) = {result}")
+        return result
+
+    def tangent(self, degrees):
+        radians = math.radians(degrees)
+        result = math.tan(radians)
+        self.history.append(f"Tangent: tan({degrees}°) = {result}")
+        return result
+
+    def secant(self, degrees):
+        radians = math.radians(degrees)
+        result = 1 / math.cos(radians)
+        self.history.append(f"Secant: sec({degrees}°) = {result}")
+        return result
+
+    def cosecant(self, degrees):
+        radians = math.radians(degrees)
+        result = 1 / math.sin(radians)
+        self.history.append(f"Cosecant: csc({degrees}°) = {result}")
+        return result
+
+    def cotangent(self, degrees):
+        radians = math.radians(degrees)
+        result = 1 / math.tan(radians)
+        self.history.append(f"Cotangent: cot({degrees}°) = {result}")
+        return result
+
+    def differentiate_sine(self, degrees):
+        radians = math.radians(degrees)
+        result = math.cos(radians)
+        self.history.append(f"Differentiated Sine: d/dx sin({degrees}°) = {result}")
+        return result
+
+    def differentiate_cosine(self, degrees):
+        radians = math.radians(degrees)
+        result = -math.sin(radians)
+        self.history.append(f"Differentiated Cosine: d/dx cos({degrees}°) = {result}")
+        return result
+
+    def differentiate_tangent(self, degrees):
+        radians = math.radians(degrees)
+        result = 1 / math.cos(radians) ** 2
+        self.history.append(f"Differentiated Tangent: d/dx tan({degrees}°) = {result}")
+        return result
+
+    def integrate_sine(self, degrees):
+        radians = math.radians(degrees)
+        result = -math.cos(radians)
+        self.history.append(f"Integrated Sine: ∫ sin({degrees}°) dx = {result}")
+        return result
+
+    def integrate_cosine(self, degrees):
+        radians = math.radians(degrees)
+        result = math.sin(radians)
+        self.history.append(f"Integrated Cosine: ∫ cos({degrees}°) dx = {result}")
+        return result
+
+    def integrate_tangent(self, degrees):
+        radians = math.radians(degrees)
+        result = -math.log(abs(math.cos(radians)))
+        self.history.append(f"Integrated Tangent: ∫ tan({degrees}°) dx = {result}")
+        return result
+
+    def show_history(self):
+        if not self.history:
+            return "No history available."
+        else:
+            return "\n".join(self.history)
+
+class CalculatorApp:
+    def __init__(self, root):
+        self.calc = AdvancedCalculator()
+        self.root = root
+        self.root.title("Advanced Calculator")
+
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.label = tk.Label(self.root, text="Advanced Calculator", font=("Arial", 16))
+        self.label.pack(pady=10)
+
+        self.entry_a = tk.Entry(self.root)
+        self.entry_a.pack(pady=5)
+        self.entry_a.insert(0, "Enter value for a")
+
+        self.entry_b = tk.Entry(self.root)
+        self.entry_b.pack(pady=5)
+        self.entry_b.insert(0, "Enter value for b (if needed)")
+
+        self.result_label = tk.Label(self.root, text="", font=("Arial", 14))
+        self.result_label.pack(pady=10)
+
+        self.history_button = tk.Button(self.root, text="Show History", command=self.show_history)
+        self.history_button.pack(pady=5)
+
+        self.create_operation_buttons()
+
+    def create_operation_buttons(self):
+        operations = [
+            ("Addition", self.calc.add),
+            ("Subtraction", self.calc.subtract),
+            ("Multiplication", self.calc.multiply),
+            ("Division", self.calc.divide),
+            ("Power", self.calc.power),
+            ("Square Root", self.calc.square_root),
+            ("Logarithm", self.calc.logarithm),
+            ("Sine", self.calc.sine),
+            ("Cosine", self.calc.cosine),
+            ("Tangent", self.calc.tangent),
+            ("Secant", self.calc.secant),
+            ("Cosecant", self.calc.cosecant),
+            ("Cotangent", self.calc.cotangent),
+            ("Differentiate Sine", self.calc.differentiate_sine),
+            ("Differentiate Cosine", self.calc.differentiate_cosine),
+            ("Differentiate Tangent", self.calc.differentiate_tangent),
+            ("Integrate Sine", self.calc.integrate_sine),
+            ("Integrate Cosine", self.calc.integrate_cosine),
+            ("Integrate Tangent", self.calc.integrate_tangent),
+        ]
+
+        for (text, func) in operations:
+            button = tk.Button(self.root, text=text, command=lambda f=func: self.perform_operation(f))
+            button.pack(pady=2)
+
+    def perform_operation(self, operation):
+        try:
+            a = float(self.entry_a.get())
+            b = self.entry_b.get()
+            if b:
+                b = float(b)
+                result = operation(a, b)
+            else:
+                result = operation(a)
+            self.result_label.config(text=f"Result: {result}")
+        except ValueError as e:
+            messagebox.showerror("Error", str(e))
+
+    def show_history(self):
+        history = self.calc.show_history()
+        messagebox.showinfo("History", history)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = CalculatorApp(root)
+    root.mainloop()
